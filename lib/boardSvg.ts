@@ -12,6 +12,7 @@ import wh from "./res/wh.svg?raw";
 
 export default class BoardSvg {
   private readonly element: HTMLDivElement;
+  private color: "black" | "white" | undefined;
 
   constructor(
     appendTo: HTMLElement,
@@ -24,10 +25,17 @@ export default class BoardSvg {
 
     this.element = el;
 
-    this.putStone(null);
+    this._putStone(undefined, true);
   }
 
-  public putStone(color: "black" | "white" | null) {
+  public putStone(color: "black" | "white" | undefined) {
+    this._putStone(color, false);
+  }
+
+  private _putStone(color: "black" | "white" | undefined, forced: boolean) {
+    if (!forced && this.color === color) return;
+    this.color = color;
+
     if (color) {
       if (color === "black") {
         this.element.innerHTML = bl;
@@ -76,4 +84,20 @@ export default class BoardSvg {
       svg.style.verticalAlign = "bottom";
     }
   }
+}
+
+export function createBoardSvgs(
+  appendTo: HTMLElement,
+  boardSize: number,
+): BoardSvg[][] {
+  const boardSvgRows: BoardSvg[][] = [];
+  for (let r = 0; r < boardSize; ++r) {
+    const boardSvgColumns: BoardSvg[] = [];
+    for (let c = 0; c < boardSize; ++c) {
+      const boardSvg = new BoardSvg(appendTo, boardSize, [r, c]);
+      boardSvgColumns.push(boardSvg);
+    }
+    boardSvgRows.push(boardSvgColumns);
+  }
+  return boardSvgRows;
 }

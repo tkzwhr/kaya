@@ -7,8 +7,8 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
 # Features
  
 - [x] Board operation
-- [ ] Load SGF
-  - [ ] from a raw text
+- [x] Load SGF
+  - [x] from a raw text
   - [ ] from a file
 - [ ] Symbol such as circle, triangle, etc.
 - [ ] Multiple path
@@ -21,7 +21,9 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
 
 # Requirement
 
-* none
+* [@sabaki/go-board](https://github.com/SabakiHQ/go-board) (installed automatically)
+* [@sabaki/immutable-gametree](https://github.com/SabakiHQ/immutable-gametree) (installed automatically)
+* [@sabaki/sgf](https://github.com/SabakiHQ/sgf) (installed automatically)
 
 # Installation
 

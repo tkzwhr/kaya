@@ -19,6 +19,9 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
+    "@sabaki/go-board": "^1.4.3",
+    "@sabaki/immutable-gametree": "^1.9.4",
+    "@sabaki/sgf": "^3.4.7",
     "@types/node": "^22.13.9"
   },
   "devDependencies": {

@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@sabaki/go-board':
+        specifier: ^1.4.3
+        version: 1.4.3
+      '@sabaki/immutable-gametree':
+        specifier: ^1.9.4
+        version: 1.9.4
+      '@sabaki/sgf':
+        specifier: ^3.4.7
+        version: 3.4.7
       '@types/node':
         specifier: ^22.13.9
         version: 22.13.10
@@ -395,6 +404,15 @@ packages:
   '@rushstack/ts-command-line@4.23.5':
     resolution: {integrity: sha512-jg70HfoK44KfSP3MTiL5rxsZH7X1ktX3cZs9Sl8eDu1/LxJSbPsh0MOFRC710lIuYYSgxWjI5AjbCBAl7u3RxA==}
 
+  '@sabaki/go-board@1.4.3':
+    resolution: {integrity: sha512-tXonP7vw7bYcXKSVrN1bhkb/QQi5EfTbDSflBffSp2iabbFbz4JyhEyw0ekbuwR0ntBq6iHky6BfCGF69Z4ttg==}
+
+  '@sabaki/immutable-gametree@1.9.4':
+    resolution: {integrity: sha512-7DKEu/0zYOrPKCaj54zkHxdxw2sRUOki+br6NxT2sbhLiXNCDjKj1nSvGyMD9TdKzM2e4B/kFm58rE9bk6dpKQ==}
+
+  '@sabaki/sgf@3.4.7':
+    resolution: {integrity: sha512-513CQMEejYVqaIKWK+P3AL1TXv2cqdUVOI+3mJDGcDEw5fWlz8puEYn+aQrGjnxJrn5XUUX0fefndEJbam65Sw==}
+
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -552,6 +570,9 @@ packages:
       supports-color:
         optional: true
 
+  doken@1.0.2:
+    resolution: {integrity: sha512-JSVsMxaB5yikb6wBDQTGIcyNyUytrYQE7WGyGAC0EoFunUTV7Wag4p5JC2bXKuTfD7t847dy7TWcwyETUbYAiw==}
+
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
 
@@ -610,6 +631,10 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  iconv-lite@0.4.24:
+    resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
+    engines: {node: '>=0.10.0'}
+
   import-lazy@4.0.0:
     resolution: {integrity: sha512-rKtvo6a868b5Hu3heneU+L4yEQ4jYKLtjpnPeUdK7h0yzXGmyBTypknlkCvHFBqfX9YlorEiMM6Dnq/5atfHkw==}
     engines: {node: '>=8'}
@@ -620,6 +645,10 @@ packages:
 
   jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
+
+  jschardet@2.3.0:
+    resolution: {integrity: sha512-6I6xT7XN/7sBB7q8ObzKbmv5vN+blzLcboDE1BNEsEfmRXJValMxO6OIRT69ylPBRemS3rw6US+CMCar0OBc9g==}
+    engines: {node: '>=0.1.90'}
 
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
@@ -774,6 +803,9 @@ packages:
     resolution: {integrity: sha512-kg6oI4g+vc41vePJyO6dHt/yl0Rz3Thv0kJeVQ3D1kS3E5XSuKbPc29G4IpT/Kv1KQwgHVcN+HtyS+HYLNSvQg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
+
+  safer-buffer@2.1.2:
+    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
   semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
@@ -1164,6 +1196,17 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+  '@sabaki/go-board@1.4.3': {}
+
+  '@sabaki/immutable-gametree@1.9.4': {}
+
+  '@sabaki/sgf@3.4.7':
+    dependencies:
+      doken: 1.0.2
+    optionalDependencies:
+      iconv-lite: 0.4.24
+      jschardet: 2.3.0
+
   '@trysound/sax@0.2.0': {}
 
   '@types/argparse@1.0.38': {}
@@ -1343,6 +1386,8 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  doken@1.0.2: {}
+
   dom-serializer@2.0.0:
     dependencies:
       domelementtype: 2.3.0
@@ -1418,6 +1463,11 @@ snapshots:
 
   he@1.2.0: {}
 
+  iconv-lite@0.4.24:
+    dependencies:
+      safer-buffer: 2.1.2
+    optional: true
+
   import-lazy@4.0.0: {}
 
   is-core-module@2.16.1:
@@ -1425,6 +1475,9 @@ snapshots:
       hasown: 2.0.2
 
   jju@1.4.0: {}
+
+  jschardet@2.3.0:
+    optional: true
 
   json-schema-traverse@1.0.0: {}
 
@@ -1588,6 +1641,9 @@ snapshots:
       '@rollup/rollup-win32-ia32-msvc': 4.35.0
       '@rollup/rollup-win32-x64-msvc': 4.35.0
       fsevents: 2.3.3
+
+  safer-buffer@2.1.2:
+    optional: true
 
   semver@7.5.4:
     dependencies:
