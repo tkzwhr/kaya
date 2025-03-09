@@ -4,16 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
-  "main": "./dist/counter.umd.cjs",
-  "module": "./dist/counter.js",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "types": "./index.d.ts",
   "exports": {
     "types": "./index.d.ts",
-    "import": "./dist/counter.js",
-    "require": "./dist/counter.umd.cjs"
+    "import": "./dist/index.js",
+    "require": "./dist/index.umd.cjs"
   },
   "scripts": {
     "dev": "vite",
@@ -23,7 +22,8 @@
     "@biomejs/biome": "^1.9.4",
     "lefthook": "^1.11.3",
     "typescript": "^5.8.2",
-    "vite": "^6.2.1"
+    "vite": "^6.2.1",
+    "vite-plugin-dts": "^4.5.3"
   },
   "packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228"
 }
