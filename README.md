@@ -16,8 +16,8 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
   - [ ] 9, 13, 19
   - [ ] Square of any size
   - [ ] Rectangle of any size
-- [ ] Keyboard operation
-- [ ] Mouse wheel operation
+- [x] Keyboard operation
+- [x] Mouse wheel operation
 
 # Requirement
 
@@ -56,6 +56,8 @@ npm install kaya
 #### KayaOptions
 
 - `sgfText?: string`: specify SGF text
+- `enableKeyboard?: boolean`: enable keyboard operation [default: true]
+- `enableWheel?: boolean`: enable wheel operation [default: true]
 
 ### `#navigate(steps)`
 
