@@ -12,14 +12,14 @@ if (app) {
   const prevButton = document.createElement("button");
   prevButton.innerText = "Previous";
   prevButton.onclick = (_ev: MouseEvent) => {
-    kaya.navigatePrevious();
+    kaya.navigate(-1);
   };
   container.appendChild(prevButton);
 
   const nextButton = document.createElement("button");
   nextButton.innerText = "Next";
   nextButton.onclick = (_ev: MouseEvent) => {
-    kaya.navigateNext();
+    kaya.navigate(1);
   };
   container.appendChild(nextButton);
 

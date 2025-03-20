@@ -27,13 +27,8 @@ export class Kaya {
     parent.appendChild(inner);
   }
 
-  public navigateNext() {
-    this.sgfController?.navigateNext();
-    this.syncBoard();
-  }
-
-  public navigatePrevious() {
-    this.sgfController?.navigatePrevious();
+  public navigate(steps: number) {
+    this.sgfController?.navigate(steps);
     this.syncBoard();
   }
 

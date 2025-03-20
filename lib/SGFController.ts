@@ -79,7 +79,19 @@ export class SGFController {
     }));
   }
 
-  public navigateNext() {
+  public navigate(steps: number) {
+    if (steps > 0) {
+      for (let i = 0; i < steps; ++i) {
+        this._navigateNext();
+      }
+    } else if (steps < 0) {
+      for (let i = 0; i < -steps; ++i) {
+        this._navigatePrevious();
+      }
+    }
+  }
+
+  private _navigateNext() {
     const lastNode =
       this.gameTree.get(this._fetchLastGame().nodeId) ?? undefined;
     if (lastNode === undefined) return;
@@ -106,7 +118,7 @@ export class SGFController {
     });
   }
 
-  public navigatePrevious() {
+  private _navigatePrevious() {
     if (this.games.length >= 2) {
       this.games.pop();
     }

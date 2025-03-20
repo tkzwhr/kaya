@@ -66,11 +66,11 @@ describe("currentBoard", () => {
   });
 });
 
-describe("navigateNext", () => {
+describe("navigate", () => {
   it("should return next game", () => {
     const sgfController = SGFController.new(sgfText);
 
-    sgfController?.navigateNext();
+    sgfController?.navigate(1);
     const result1 = sgfController?.currentBoard();
 
     expect(serialize(result1)).toStrictEqual([
@@ -81,9 +81,7 @@ describe("navigateNext", () => {
       "+++++",
     ]);
 
-    for (let i = 0; i < 9; ++i) {
-      sgfController?.navigateNext();
-    }
+    sgfController?.navigate(9);
     const result2 = sgfController?.currentBoard();
 
     expect(serialize(result2)).toStrictEqual([
@@ -94,16 +92,12 @@ describe("navigateNext", () => {
       "+++++",
     ]);
   });
-});
 
-describe("navigatePrevious", () => {
   it("should return previous game", () => {
     const sgfController = SGFController.new(sgfText);
-    for (let i = 0; i < 9; ++i) {
-      sgfController?.navigateNext();
-    }
+    sgfController?.navigate(9);
 
-    sgfController?.navigatePrevious();
+    sgfController?.navigate(-1);
     const result1 = sgfController?.currentBoard();
 
     expect(serialize(result1)).toStrictEqual([
@@ -114,9 +108,7 @@ describe("navigatePrevious", () => {
       "+++++",
     ]);
 
-    for (let i = 0; i < 9; ++i) {
-      sgfController?.navigatePrevious();
-    }
+    sgfController?.navigate(-9);
     const result2 = sgfController?.currentBoard();
 
     expect(serialize(result2)).toStrictEqual([
