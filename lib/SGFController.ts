@@ -1,77 +1,122 @@
-// @ts-ignore
 import SabakiGoBoard from "@sabaki/go-board";
 // @ts-ignore
 import SabakiImmutableGameTree from "@sabaki/immutable-gametree";
 // @ts-ignore
 import * as SabakiSgf from "@sabaki/sgf";
+import type { BoardStatus } from "./types.ts";
+import { ArrayUtils, NodeUtils, PointStateUtils } from "./utils.ts";
+
+type Game = {
+  nodeId: number;
+  board: SabakiGoBoard;
+};
 
 export class SGFController {
   public readonly boardSize: number = 0;
   // biome-ignore lint/suspicious/noExplicitAny: has no types
   private gameTree: any;
+  private games: Game[] = [];
+
   // biome-ignore lint/suspicious/noExplicitAny: has no types
-  private goBoards: any[] = [];
-  private currentNodeIds: number[] = [0];
-
-  constructor(sgfText: string) {
-    const sgfNodes = SabakiSgf.parse(sgfText);
-    if (sgfNodes.length === 0) return;
-
-    const rootNode = sgfNodes[0];
-    this.boardSize = Number.parseInt(rootNode.data.SZ);
+  private constructor(node: any) {
+    this.boardSize = Number.parseInt(node.data.SZ);
 
     this.gameTree = new SabakiImmutableGameTree({
-      root: rootNode,
+      root: node,
     });
 
-    const goBoard: (1 | -1 | 0)[][] = [];
-    for (let r = 0; r < this.boardSize; ++r) {
-      const goBoardSub: (1 | -1 | 0)[] = [];
-      for (let c = 0; c < this.boardSize; ++c) {
-        goBoardSub.push(0);
+    const initialStones = {
+      AB: new Set<string>(),
+      AW: new Set<string>(),
+    };
+    if (Array.isArray(node.data.AB)) {
+      for (const pos of node.data.AB) {
+        initialStones.AB.add(pos);
       }
-      goBoard.push(goBoardSub);
     }
-    this.goBoards = [new SabakiGoBoard(goBoard)];
+    if (Array.isArray(node.data.AW)) {
+      for (const pos of node.data.AW) {
+        initialStones.AW.add(pos);
+      }
+    }
+
+    const goBoard: (1 | -1 | 0)[][] = ArrayUtils.mapSquare(
+      this.boardSize,
+      (r, c) => {
+        const pos = SabakiSgf.stringifyVertex([c, r]);
+        if (initialStones.AB.has(pos)) {
+          return 1;
+        }
+        if (initialStones.AW.has(pos)) {
+          return -1;
+        }
+        return 0;
+      },
+    );
+    this.games = [
+      {
+        nodeId: 0,
+        board: new SabakiGoBoard(goBoard),
+      },
+    ];
   }
 
-  public currentBoard(): (1 | -1 | 0)[][] {
-    return this.goBoards[this.goBoards.length - 1].signMap;
+  static new(sgfText: string | undefined): SGFController | undefined {
+    if (sgfText === undefined) return undefined;
+
+    const sgfNodes = SabakiSgf.parse(sgfText);
+    if (sgfNodes.length !== 1) return undefined;
+
+    return new SGFController(sgfNodes[0]);
+  }
+
+  public currentBoard(): BoardStatus {
+    const game = this._fetchLastGame();
+
+    return ArrayUtils.mapSquare(this.boardSize, (r, c) => ({
+      sign: PointStateUtils.fromSign(game.board.signMap[r][c]),
+      markup: undefined,
+    }));
   }
 
   public navigateNext() {
-    const lastNode = this.gameTree.get(
-      this.currentNodeIds[this.currentNodeIds.length - 1],
-    );
+    const lastNode =
+      this.gameTree.get(this._fetchLastGame().nodeId) ?? undefined;
+    if (lastNode === undefined) return;
+
     const nextNode = this.gameTree.navigate(lastNode.id, 1, {}) ?? undefined;
     if (nextNode === undefined) return;
 
-    if (nextNode.data?.B?.[0]) {
-      const vertex = SabakiSgf.parseVertex(nextNode.data.B[0]);
-      const nextGoBoard = this.goBoards[this.goBoards.length - 1].makeMove(
-        1,
-        vertex,
-      );
-      this.goBoards.push(nextGoBoard);
-    } else if (nextNode.data?.W?.[0]) {
-      const vertex = SabakiSgf.parseVertex(nextNode.data.W[0]);
-      const nextGoBoard = this.goBoards[this.goBoards.length - 1].makeMove(
-        -1,
-        vertex,
-      );
-      this.goBoards.push(nextGoBoard);
-    } else {
-      const nextGoBoard = this.goBoards[this.goBoards.length - 1].clone();
-      this.goBoards.push(nextGoBoard);
+    const nextMove = NodeUtils.nextMove(nextNode);
+    if (nextMove === undefined) {
+      const board = this._fetchLastGame().board.clone();
+      this.games.push({
+        nodeId: nextNode.id,
+        board,
+      });
+      return;
     }
 
-    this.currentNodeIds.push(nextNode.id);
+    const color = nextMove.color === "B" ? 1 : -1;
+    const vertex = SabakiSgf.parseVertex(nextMove.pos);
+    const board = this._fetchLastGame().board.makeMove(color, vertex);
+    this.games.push({
+      nodeId: nextNode.id,
+      board,
+    });
   }
 
   public navigatePrevious() {
-    if (this.currentNodeIds.length < 2) return;
+    if (this.games.length >= 2) {
+      this.games.pop();
+    }
+  }
 
-    this.goBoards.pop();
-    this.currentNodeIds.pop();
+  private _fetchLastGame(): Game {
+    const lastGame = this.games.at(-1);
+    if (lastGame === undefined)
+      throw new Error("Illegal State: Last game not found");
+
+    return lastGame;
   }
 }

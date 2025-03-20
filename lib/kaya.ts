@@ -10,12 +10,8 @@ export class Kaya {
   private boardSvgs: BoardSvg[][] = [];
   private readonly sgfController: SGFController | undefined = undefined;
 
-  constructor(el: HTMLElement | undefined, options?: KayaOptions) {
-    if (el === undefined) return;
-
-    if (options?.sgfText) {
-      this.sgfController = new SGFController(options.sgfText);
-    }
+  constructor(parent: HTMLElement, options?: KayaOptions) {
+    this.sgfController = SGFController.new(options?.sgfText);
 
     const boardSize = this.sgfController?.boardSize ?? 19;
 
@@ -28,7 +24,7 @@ export class Kaya {
 
     this.syncBoard();
 
-    el.appendChild(inner);
+    parent.appendChild(inner);
   }
 
   public navigateNext() {
@@ -44,20 +40,11 @@ export class Kaya {
   private syncBoard() {
     if (this.sgfController === undefined) return;
 
-    const signMap = this.sgfController.currentBoard();
-
-    for (let r = 0; r < this.sgfController.boardSize; ++r)
+    const board = this.sgfController.currentBoard();
+    for (let r = 0; r < this.sgfController.boardSize; ++r) {
       for (let c = 0; c < this.sgfController.boardSize; ++c) {
-        switch (signMap[r][c]) {
-          case 1:
-            this.boardSvgs[r][c].putStone("black");
-            break;
-          case -1:
-            this.boardSvgs[r][c].putStone("white");
-            break;
-          default:
-            this.boardSvgs[r][c].putStone(undefined);
-        }
+        this.boardSvgs[r][c].putStone(board[r][c].sign);
       }
+    }
   }
 }

@@ -9,10 +9,12 @@ import rb from "./res/rb.svg?raw";
 import rc from "./res/rc.svg?raw";
 import rt from "./res/rt.svg?raw";
 import wh from "./res/wh.svg?raw";
+import type { StoneColor } from "./types.ts";
+import { ArrayUtils } from "./utils.ts";
 
 export default class BoardSvg {
   private readonly element: HTMLDivElement;
-  private color: "black" | "white" | undefined;
+  private color: StoneColor;
 
   constructor(
     appendTo: HTMLElement,
@@ -28,16 +30,16 @@ export default class BoardSvg {
     this._putStone(undefined, true);
   }
 
-  public putStone(color: "black" | "white" | undefined) {
+  public putStone(color: StoneColor) {
     this._putStone(color, false);
   }
 
-  private _putStone(color: "black" | "white" | undefined, forced: boolean) {
+  private _putStone(color: StoneColor, forced: boolean) {
     if (!forced && this.color === color) return;
     this.color = color;
 
     if (color) {
-      if (color === "black") {
+      if (color === "B") {
         this.element.innerHTML = bl;
       } else {
         this.element.innerHTML = wh;
@@ -90,14 +92,8 @@ export function createBoardSvgs(
   appendTo: HTMLElement,
   boardSize: number,
 ): BoardSvg[][] {
-  const boardSvgRows: BoardSvg[][] = [];
-  for (let r = 0; r < boardSize; ++r) {
-    const boardSvgColumns: BoardSvg[] = [];
-    for (let c = 0; c < boardSize; ++c) {
-      const boardSvg = new BoardSvg(appendTo, boardSize, [r, c]);
-      boardSvgColumns.push(boardSvg);
-    }
-    boardSvgRows.push(boardSvgColumns);
-  }
-  return boardSvgRows;
+  return ArrayUtils.mapSquare(
+    boardSize,
+    (r, c) => new BoardSvg(appendTo, boardSize, [r, c]),
+  );
 }
