@@ -9,9 +9,12 @@ import rb from "./res/rb.svg?raw";
 import rc from "./res/rc.svg?raw";
 import rt from "./res/rt.svg?raw";
 import wh from "./res/wh.svg?raw";
+import type { StoneColor } from "./types.ts";
+import { ArrayUtils } from "./utils.ts";
 
 export default class BoardSvg {
   private readonly element: HTMLDivElement;
+  private color: StoneColor;
 
   constructor(
     appendTo: HTMLElement,
@@ -24,12 +27,19 @@ export default class BoardSvg {
 
     this.element = el;
 
-    this.putStone(null);
+    this._putStone(undefined, true);
   }
 
-  public putStone(color: "black" | "white" | null) {
+  public putStone(color: StoneColor) {
+    this._putStone(color, false);
+  }
+
+  private _putStone(color: StoneColor, forced: boolean) {
+    if (!forced && this.color === color) return;
+    this.color = color;
+
     if (color) {
-      if (color === "black") {
+      if (color === "B") {
         this.element.innerHTML = bl;
       } else {
         this.element.innerHTML = wh;
@@ -76,4 +86,14 @@ export default class BoardSvg {
       svg.style.verticalAlign = "bottom";
     }
   }
+}
+
+export function createBoardSvgs(
+  appendTo: HTMLElement,
+  boardSize: number,
+): BoardSvg[][] {
+  return ArrayUtils.mapSquare(
+    boardSize,
+    (r, c) => new BoardSvg(appendTo, boardSize, [r, c]),
+  );
 }

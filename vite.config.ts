@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import dts from "vite-plugin-dts";
 import svgLoader from "vite-svg-loader";
 import {defineConfig} from "vite";
@@ -9,6 +11,12 @@ export default defineConfig({
             entry: './lib/index.ts',
             name: 'index',
             fileName: 'index'
+        },
+    },
+    test: {
+        coverage: {
+            enabled: true,
+            include: ["lib/**"]
         },
     },
 });

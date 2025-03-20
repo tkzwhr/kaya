@@ -5,10 +5,10 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
 
 
 # Features
- 
+
 - [x] Board operation
-- [ ] Load SGF
-  - [ ] from a raw text
+- [x] Load SGF
+  - [x] from a raw text
   - [ ] from a file
 - [ ] Symbol such as circle, triangle, etc.
 - [ ] Multiple path
@@ -21,7 +21,9 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
 
 # Requirement
 
-* none
+* [@sabaki/go-board](https://github.com/SabakiHQ/go-board) (installed automatically)
+* [@sabaki/immutable-gametree](https://github.com/SabakiHQ/immutable-gametree) (installed automatically)
+* [@sabaki/sgf](https://github.com/SabakiHQ/sgf) (installed automatically)
 
 # Installation
 
@@ -37,23 +39,29 @@ npm install kaya
   
   const el = document.getElementById("board");
   if (el) {
-    const kaya = new Kaya(el, 9);
+    const kaya = new Kaya(el, {
+      sgfText: "(;GM[1]FF[4]SZ[9];B[aa];W[ba];B[bb];W[ab];B[];W[])",
+    });
     
     window.kaya = kaya;
   } 
 </script>
 ```
 
-### `#putStone(color, position)`
+### `Constructor(element, options)`
 
-Put a stone at the specified position on the board.
-If null specified, remove the stone from the board.
+- `element: HTMLElement`: create a go board UI into the element
+- `options: KayaOptions`: set up the board
 
-- `color: string | null`: specify the stone color
-  - "black"
-  - "white"
-  - null
-- `position: [number, number]`: specify the position (row and column)
+#### KayaOptions
+
+- `sgfText?: string`: specify SGF text
+
+### `#navigate(steps)`
+
+Simulate the state of the game.
+
+- `steps: number`: if positive forward the state of the game to specified number, if negative rewind the state of the game to specified number
 
 # Note
 
