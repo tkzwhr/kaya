@@ -4,6 +4,8 @@ import { createBoardSvgs } from "./boardSvg.ts";
 
 export type KayaOptions = {
   sgfText?: string;
+  enableKeyboard?: boolean;
+  enableWheel?: boolean;
 };
 
 export class Kaya {
@@ -20,19 +22,51 @@ export class Kaya {
     inner.style.width = `round(down, 100%, ${boardSize}px)`;
     inner.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
 
+    if (options?.enableKeyboard === undefined || options?.enableKeyboard) {
+      inner.tabIndex = 1;
+      inner.addEventListener("keydown", (ev) => this._handleKeyboard(ev));
+    }
+
+    if (options?.enableWheel === undefined || options?.enableWheel) {
+      inner.addEventListener("wheel", (ev) => this.handleWheel(ev));
+    }
+
     this.boardSvgs = createBoardSvgs(inner, boardSize);
 
-    this.syncBoard();
+    this._syncBoard();
 
     parent.appendChild(inner);
   }
 
   public navigate(steps: number) {
     this.sgfController?.navigate(steps);
-    this.syncBoard();
+    this._syncBoard();
   }
 
-  private syncBoard() {
+  private _handleKeyboard(event: KeyboardEvent) {
+    if (event.key === "ArrowRight") {
+      if (event.shiftKey) {
+        this.navigate(5);
+      } else {
+        this.navigate(1);
+      }
+    } else if (event.key === "ArrowLeft") {
+      if (event.shiftKey) {
+        this.navigate(-5);
+      }
+      this.navigate(-1);
+    }
+  }
+
+  private handleWheel(event: WheelEvent) {
+    if (event.deltaY > 0) {
+      this.navigate(1);
+    } else if (event.deltaY < 0) {
+      this.navigate(-1);
+    }
+  }
+
+  private _syncBoard() {
     if (this.sgfController === undefined) return;
 
     const board = this.sgfController.currentBoard();
