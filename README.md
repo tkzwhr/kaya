@@ -1,6 +1,8 @@
 Kaya
 ==
 
+![demo](./demo.png)
+
 Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as React, Vue, etc.
 
 
@@ -13,8 +15,8 @@ Pure Go/Weiqi/Baduk UI library, independent of any specific UI libraries such as
 - [ ] Symbol such as circle, triangle, etc.
 - [ ] Multiple path
 - [ ] Board size
-  - [ ] 9, 13, 19
-  - [ ] Square of any size
+  - [x] 9, 13, 19
+  - [x] Square of any size
   - [ ] Rectangle of any size
 - [x] Keyboard operation
 - [x] Mouse wheel operation
