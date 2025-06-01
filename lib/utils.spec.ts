@@ -1,3 +1,4 @@
+import type { NodeObject } from "@sabaki/immutable-gametree";
 import { describe, expect, it } from "vitest";
 import { ArrayUtils, NodeUtils, PointStateUtils } from "./utils.ts";
 
@@ -14,7 +15,10 @@ describe("PointStateUtils", () => {
 describe("NodeUtils", () => {
   describe("nextMove", () => {
     it("should return next move", () => {
-      const nodeB = {
+      const nodeB: NodeObject = {
+        id: 0,
+        parentId: null,
+        children: [],
         data: {
           B: ["aa"],
         },
@@ -25,6 +29,9 @@ describe("NodeUtils", () => {
       });
 
       const nodeW = {
+        id: 1,
+        parentId: null,
+        children: [],
         data: {
           W: ["bb"],
         },
@@ -35,6 +42,9 @@ describe("NodeUtils", () => {
       });
 
       const nodeU = {
+        id: 2,
+        parentId: null,
+        children: [],
         data: {
           W: [],
         },
