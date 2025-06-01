@@ -8,9 +8,32 @@ import lt from "./res/lt.svg?raw";
 import rb from "./res/rb.svg?raw";
 import rc from "./res/rc.svg?raw";
 import rt from "./res/rt.svg?raw";
+import st from "./res/st.svg?raw";
 import wh from "./res/wh.svg?raw";
 import type { StoneColor } from "./types.ts";
 import { ArrayUtils } from "./utils.ts";
+
+const STARS: Record<number, [number, number][]> = {
+  9: [[5, 5]],
+  13: [
+    [4, 4],
+    [4, 10],
+    [7, 7],
+    [10, 4],
+    [10, 10],
+  ],
+  19: [
+    [4, 4],
+    [4, 10],
+    [4, 16],
+    [10, 4],
+    [10, 10],
+    [10, 16],
+    [16, 4],
+    [16, 10],
+    [16, 16],
+  ],
+};
 
 export default class BoardSvg {
   private readonly element: HTMLDivElement;
@@ -51,7 +74,9 @@ export default class BoardSvg {
     }
 
     const [r, c] = this.position;
-    if (r === 0) {
+    if (STARS[this.boardSize]?.some((v) => v[0] === r + 1 && v[1] === c + 1)) {
+      this.element.innerHTML = st;
+    } else if (r === 0) {
       if (c === 0) {
         this.element.innerHTML = lt;
       } else if (c === this.boardSize - 1) {
