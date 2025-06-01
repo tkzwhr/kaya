@@ -28,7 +28,10 @@ export class Kaya {
     }
 
     if (options?.enableWheel === undefined || options?.enableWheel) {
-      inner.addEventListener("wheel", (ev) => this.handleWheel(ev));
+      inner.addEventListener("wheel", (ev) => {
+        ev.preventDefault();
+        this.handleWheel(ev);
+      });
     }
 
     this.boardSvgs = createBoardSvgs(inner, boardSize);
