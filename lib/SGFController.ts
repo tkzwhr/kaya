@@ -1,7 +1,7 @@
 import SabakiGoBoard from "@sabaki/go-board";
-// @ts-ignore
-import SabakiImmutableGameTree from "@sabaki/immutable-gametree";
-// @ts-ignore
+import SabakiImmutableGameTree, {
+  type NodeObject,
+} from "@sabaki/immutable-gametree";
 import * as SabakiSgf from "@sabaki/sgf";
 import type { BoardStatus } from "./types.ts";
 import { ArrayUtils, NodeUtils, PointStateUtils } from "./utils.ts";
@@ -13,13 +13,11 @@ type Game = {
 
 export class SGFController {
   public readonly boardSize: number = 0;
-  // biome-ignore lint/suspicious/noExplicitAny: has no types
-  private gameTree: any;
   private games: Game[] = [];
+  private gameTree;
 
-  // biome-ignore lint/suspicious/noExplicitAny: has no types
-  private constructor(node: any) {
-    this.boardSize = Number.parseInt(node.data.SZ);
+  private constructor(node: NodeObject) {
+    this.boardSize = node.data.SZ?.[0] ? Number.parseInt(node.data.SZ[0]) : 19;
 
     this.gameTree = new SabakiImmutableGameTree({
       root: node,

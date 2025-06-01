@@ -1,3 +1,4 @@
+import type { NodeObject } from "@sabaki/immutable-gametree";
 import type { StoneColor } from "./types.ts";
 
 export const PointStateUtils = {
@@ -15,8 +16,7 @@ export const PointStateUtils = {
 
 export const NodeUtils = {
   nextMove: (
-    // biome-ignore lint/suspicious/noExplicitAny: has no type
-    node: any,
+    node: NodeObject,
   ): { color: "B"; pos: string } | { color: "W"; pos: string } | undefined => {
     if (node.data?.B?.[0]) {
       return {
