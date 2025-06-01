@@ -1,0 +1,10 @@
+/lib
+/node_modules
+/public
+/src
+biome.json
+index.html
+lefthook.yml
+pnpm-lock.yaml
+tsconfig.json
+vite.config.ts

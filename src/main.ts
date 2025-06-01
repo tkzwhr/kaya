@@ -1,13 +1,10 @@
 import Kaya from "../lib";
 
-const app = document.querySelector<HTMLDivElement>("#app");
-if (app) {
+function createBoard(parent: HTMLElement, sgfText: string) {
   const container = document.createElement("div");
   container.style.width = "500px";
 
-  const kaya = new Kaya(container, {
-    sgfText: "(;GM[1]FF[4]SZ[9];B[aa];W[ba];B[bb];W[ab];B[];W[])",
-  });
+  const kaya = new Kaya(container, { sgfText });
 
   const prevButton = document.createElement("button");
   prevButton.innerText = "Previous";
@@ -24,7 +21,22 @@ if (app) {
   container.appendChild(nextButton);
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  (window as any).kaya = kaya;
+  const windowKaya = (window as any).kaya;
 
-  app.appendChild(container);
+  if (Array.isArray(windowKaya)) {
+    windowKaya.push(kaya);
+  } else {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    (window as any).kaya = [kaya];
+  }
+
+  parent.appendChild(container);
+}
+
+const app = document.querySelector<HTMLDivElement>("#app");
+if (app) {
+  createBoard(app, "(;GM[1]FF[4]SZ[9];B[aa];W[ba];B[bb];W[ab];B[];W[])");
+  createBoard(app, "(;GM[1]FF[4]SZ[13];B[aa];W[ba];B[bb];W[ab];B[];W[])");
+  createBoard(app, "(;GM[1]FF[4]SZ[19];B[aa];W[ba];B[bb];W[ab];B[];W[])");
+  createBoard(app, "(;GM[1]FF[4]SZ[5];B[aa];W[ba];B[bb];W[ab];B[];W[])");
 }

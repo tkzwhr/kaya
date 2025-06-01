@@ -17,7 +17,19 @@ export class SGFController {
   private gameTree;
 
   private constructor(node: NodeObject) {
-    this.boardSize = node.data.SZ?.[0] ? Number.parseInt(node.data.SZ[0]) : 19;
+    this.boardSize = ((node: NodeObject) => {
+      const sz = node.data.SZ;
+      if (!sz || sz.length !== 1) {
+        return 19;
+      }
+
+      if (sz[0].includes(":")) {
+        const v = sz[0].split(":").map((v) => Number.parseInt(v));
+        return v[0];
+      }
+
+      return Number.parseInt(sz[0]);
+    })(node);
 
     this.gameTree = new SabakiImmutableGameTree({
       root: node,

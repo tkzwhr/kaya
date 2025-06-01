@@ -5,6 +5,7 @@ import type { BoardStatus } from "./types.ts";
 const sgfText =
   "(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[5]AB[cb][bd]PL[W];W[dc];B[cd];W[])";
 const sgfText2 = "(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[5]AW[cc])";
+const sgfText3 = "(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[5:7]AW[cc])";
 
 function serialize(board: BoardStatus | undefined): string[] {
   const res = [];
@@ -35,6 +36,10 @@ describe("new", () => {
   it("should return object", () => {
     const result1 = SGFController.new(sgfText);
     expect(result1).toBeInstanceOf(SGFController);
+    const result2 = SGFController.new(sgfText2);
+    expect(result2).toBeInstanceOf(SGFController);
+    const result3 = SGFController.new(sgfText3);
+    expect(result3).toBeInstanceOf(SGFController);
   });
 });
 
