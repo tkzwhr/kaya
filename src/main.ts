@@ -38,4 +38,5 @@ if (app) {
   createBoard(app, "(;GM[1]FF[4]SZ[9];B[aa];W[ba];B[bb];W[ab];B[];W[])");
   createBoard(app, "(;GM[1]FF[4]SZ[13];B[aa];W[ba];B[bb];W[ab];B[];W[])");
   createBoard(app, "(;GM[1]FF[4]SZ[19];B[aa];W[ba];B[bb];W[ab];B[];W[])");
+  createBoard(app, "(;GM[1]FF[4]SZ[5];B[aa];W[ba];B[bb];W[ab];B[];W[])");
 }
